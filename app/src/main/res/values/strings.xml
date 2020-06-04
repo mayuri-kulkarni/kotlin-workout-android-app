@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">workout</string>
+    <string name="web_client_signin_apikey">752829117342-9h809glg48vbcnv5uhmnuh7q0725vb87.apps.googleusercontent.com</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="today_s_wor">Today\'s Workout</string>
+    <string name="add_workout">Add Workout</string>
+</resources>
