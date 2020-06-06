@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "752829117342-69nhvldm30i5fve3nb4isq4c0jhgntf6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mayuri.workout",
+            "certificate_hash": "63c155fe7e6835492b31e8f3e5401b8fda81a0d5"
+          }
+        },
+        {
           "client_id": "752829117342-sc1cb6qbl38df5l9mdb1vkmvnt0dhert.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
