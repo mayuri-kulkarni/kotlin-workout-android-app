@@ -26,10 +26,10 @@ class Utils {
 
     }
 
-    fun getPreviousDates(days :Int,format: String): String{
+    fun getPreviousDates(day :Int,format: String): String{
         val df = SimpleDateFormat(format)
         var cal = Calendar.getInstance()
-        cal.add(Calendar.DAY_OF_YEAR, -days)
+        cal.add(Calendar.DAY_OF_YEAR, -day)
         return df.format(cal.time)
 
     }

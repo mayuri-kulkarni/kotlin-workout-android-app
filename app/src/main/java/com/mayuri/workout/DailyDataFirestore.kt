@@ -67,30 +67,34 @@ class DailyDataFirestore() {
     }
 
 
-    fun getAllDayData(resultListener: (Boolean) -> Unit){
+    fun getDayData(day : String ,resultListener: (Boolean,MutableList<SingleExerciseData>?) -> Unit){
+        lateinit var list :MutableList<SingleExerciseData>
 
 
         val db = Firebase.firestore
         val collectionRef = db
             .collection(dailyDataCollectionKey)
             .document(userId)
-            .collection(timestampsCollectionKey)
+            .collection(timestampsCollectionKey).document(day)
+            .collection(exerciseCollectionKey)
 
         collectionRef
             .get().addOnSuccessListener {
-            if(! it.isEmpty) {
-                UtilsJava.allDays.clear()
+
+                if(! it.isEmpty) {
                 for (document in it) {
-                    Timber.d("${document.id} => ${document.data}")
-                    UtilsJava.allDays.add(
-                        document.id
-                    )
+                    Timber.d("${document.id} => ${document.data} ${document.get(nameKey)}")
+                    list.add(SingleExerciseData(
+                        document.get(nameKey) as String,
+                        document.get(countUnitKey) as String,
+                        document.get(countKey) as String,
+                        document.get(setsKey) as String
+                    ))
                 }
             }
-            resultListener.invoke(true)
+            resultListener.invoke(true,list)
         }.addOnFailureListener(){
-            resultListener.invoke(false)
-
+            resultListener.invoke(false,list)
         }
     }
 }

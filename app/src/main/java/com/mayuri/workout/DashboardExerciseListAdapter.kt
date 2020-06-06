@@ -5,28 +5,24 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class DashboardListAdapter(private val list: List<String>, private val clickedItem : (Int) -> Unit)
-    : RecyclerView.Adapter<DashboardListiewHolder>() {
+class DashboardExerciseListAdapter(private val list: List<String>)
+    : RecyclerView.Adapter<DashboardExerciseListiewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardListiewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardExerciseListiewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return DashboardListiewHolder(inflater, parent)
+        return DashboardExerciseListiewHolder(inflater, parent)
     }
 
-    override fun onBindViewHolder(holder: DashboardListiewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DashboardExerciseListiewHolder, position: Int) {
         val movie: String = list[position]
         holder.bind(movie)
-        holder.itemView.setOnClickListener {
-            clickedItem.invoke(position)
-        }
-
     }
 
     override fun getItemCount(): Int = list.size
 
 }
 
-class DashboardListiewHolder (inflater: LayoutInflater, parent: ViewGroup) :
+class DashboardExerciseListiewHolder (inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.layout_day_list, parent, false)) {
     private var mTitleView: TextView? = null
     private var mYearView: TextView? = null

@@ -1,6 +1,7 @@
 package com.mayuri.workout
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mayuri.workout.databinding.FragmentAddExerciseBinding
 import com.mayuri.workout.databinding.FragmentDashboardBinding
 import com.mayuri.workout.databinding.FragmentTodaysExerciseBinding
@@ -19,7 +21,7 @@ import timber.log.Timber
 class DashBoardFragment : Fragment() {
     lateinit var binding: FragmentDashboardBinding
     lateinit var list: List<SingleExerciseData>
-
+    lateinit var listDates : MutableList<String>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,12 +38,14 @@ class DashBoardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("onViewCreated")
         setUpUi()
+        for( i in 0..15)
+        listDates.add(Utils().getPreviousDates(i,Utils().dateFormatDB))
 
-        DailyDataFirestore().getAllDayData {
-            if(it){
-                updateList();
-            }
-        }
+//        DailyDataFirestore().getAllDayData {
+//            if(it){
+//                updateList();
+//            }
+//        }
 
 
     }
@@ -62,10 +66,18 @@ class DashBoardFragment : Fragment() {
         Fonts.setFonts(binding.root.rootView as ViewGroup)
 
         binding.recyclerviewExercise.apply {
-            layoutManager = LinearLayoutManager(activity)
-            adapter = DashboardListAdapter(UtilsJava.allDays)
+            layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
+            adapter = DashboardListAdapter(listDates){
+                        DailyDataFirestore().getDayData(listDates[it],{ a,b ->
+                            Log.d("TAG", "setUpUi: " +b.toString())
 
+                        })
+
+//        }
+
+            }
         }
+
 
     }
 
