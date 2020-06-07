@@ -44,8 +44,6 @@ class AddExerciseFragment : Fragment() {
         colorBack = resources.getColor(R.color.black_light)
         colorUnselectedText = resources.getColor(R.color.unselected_text)
         transparent = resources.getColor(R.color.transparent)
-
-
         setUpUi()
         clickEventSetUp()
 
@@ -71,9 +69,8 @@ class AddExerciseFragment : Fragment() {
            data ){
             if(it){
                 fragmentManager!!.popBackStack()
-            }else{
-
             }
+
         }
 
 
@@ -167,7 +164,6 @@ class AddExerciseFragment : Fragment() {
     }
 
     private fun setUpUi() {
-        Fonts.setFonts(binding.root.rootView as ViewGroup)
         binding.etExercise.background.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         binding.etExercise.inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
 

@@ -44,8 +44,6 @@ class DashBoardFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         updateDateList();
-
-
     }
 
     private fun updateDateList() {
@@ -61,7 +59,6 @@ class DashBoardFragment : Fragment() {
     }
 
     private fun setUpUi() {
-        Fonts.setFonts(binding.root.rootView as ViewGroup)
 
         binding.recyclerviewExercise.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -77,16 +74,11 @@ class DashBoardFragment : Fragment() {
                     updateExerciseList()
 
                 },userid)
-
-//        }
-
             }
         }
         binding.recyclerviewList.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = DashboardExerciseListAdapter(exerciseList)
-
-
         }
     }
 

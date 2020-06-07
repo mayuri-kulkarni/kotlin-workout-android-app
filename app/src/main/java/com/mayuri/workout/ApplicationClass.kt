@@ -9,7 +9,6 @@ class ApplicationClass : Application() {
      override fun onCreate() {
          super.onCreate()
          Timber.plant(Timber.DebugTree())
-         Fonts.initFonts(applicationContext)
 
 
      }

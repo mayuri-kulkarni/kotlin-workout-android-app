@@ -17,7 +17,7 @@ import timber.log.Timber
  */
 class TodaysExerciseFragment : Fragment() {
     lateinit var binding: FragmentTodaysExerciseBinding
-    lateinit var list: MutableList<SingleExerciseData>
+     var list: MutableList<SingleExerciseData> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +59,6 @@ class TodaysExerciseFragment : Fragment() {
 
     private fun setUpUi() {
         binding.date.text = Utils().getTodayDate(Utils().dateFormatUser)
-        Fonts.setFonts(binding.root.rootView as ViewGroup)
 
         binding.recyclerviewExercise.apply {
             layoutManager = LinearLayoutManager(activity)
