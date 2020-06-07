@@ -31,5 +31,11 @@
         android:layout_below="@id/recyclerview_exercise"
         android:background="#f5f5f5" />
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recyclerview_exercise"
+        android:orientation="horizontal"
+        tools:listitem="@layout/layout_day_list" />
 </RelativeLayout>

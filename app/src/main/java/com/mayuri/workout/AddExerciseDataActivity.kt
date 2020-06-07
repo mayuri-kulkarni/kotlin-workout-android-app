@@ -25,6 +25,11 @@ class AddExerciseDataActivity : AppCompatActivity() {
 
     }
 
+
+    public fun dateSelected(){
+
+    }
+
 }
 
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {

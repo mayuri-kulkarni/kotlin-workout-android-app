@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class DashboardExerciseListAdapter(private val list: List<String>)
+class DashboardExerciseListAdapter(private val list: MutableList<SingleExerciseData>)
     : RecyclerView.Adapter<DashboardExerciseListiewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardExerciseListiewHolder {
@@ -14,7 +14,7 @@ class DashboardExerciseListAdapter(private val list: List<String>)
     }
 
     override fun onBindViewHolder(holder: DashboardExerciseListiewHolder, position: Int) {
-        val movie: String = list[position]
+        val movie: SingleExerciseData = list[position]
         holder.bind(movie)
     }
 
@@ -23,7 +23,7 @@ class DashboardExerciseListAdapter(private val list: List<String>)
 }
 
 class DashboardExerciseListiewHolder (inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.layout_day_list, parent, false)) {
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.layout_exercise_item, parent, false)) {
     private var mTitleView: TextView? = null
     private var mYearView: TextView? = null
 
@@ -33,8 +33,10 @@ class DashboardExerciseListiewHolder (inflater: LayoutInflater, parent: ViewGrou
         mYearView = itemView.findViewById(R.id.textview_exercise_details)
     }
 
-    fun bind(data: String) {
-        mTitleView?.text = data
+    fun bind(data: SingleExerciseData) {
+        mTitleView?.text = data.name
+        mYearView?.text = data.count + " " +data.countUnit +" x " +data.sets +" sets"
+
     }
 
 }

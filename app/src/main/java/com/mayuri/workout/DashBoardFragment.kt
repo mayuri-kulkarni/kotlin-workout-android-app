@@ -20,8 +20,8 @@ import timber.log.Timber
  */
 class DashBoardFragment : Fragment() {
     lateinit var binding: FragmentDashboardBinding
-    lateinit var list: List<SingleExerciseData>
-    lateinit var listDates : MutableList<String>
+    var exerciseList: MutableList<SingleExerciseData> = ArrayList()
+    var listDates: MutableList<String> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,8 +38,8 @@ class DashBoardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("onViewCreated")
         setUpUi()
-        for( i in 0..15)
-        listDates.add(Utils().getPreviousDates(i,Utils().dateFormatDB))
+        for (i in 0..15)
+            listDates.add(Utils().getPreviousDates(i, Utils().dateFormatDB))
 
 //        DailyDataFirestore().getAllDayData {
 //            if(it){
@@ -52,33 +52,49 @@ class DashBoardFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateList();
+        updateDateList();
 
 
     }
 
-    private fun updateList() {
+    private fun updateDateList() {
         binding.recyclerviewExercise.apply {
             adapter?.notifyDataSetChanged()
-        }    }
+        }
+    }
+
+    private fun updateExerciseList() {
+        binding.recyclerviewList.apply {
+            adapter?.notifyDataSetChanged()
+        }
+    }
 
     private fun setUpUi() {
         Fonts.setFonts(binding.root.rootView as ViewGroup)
 
         binding.recyclerviewExercise.apply {
-            layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
-            adapter = DashboardListAdapter(listDates){
-                        DailyDataFirestore().getDayData(listDates[it],{ a,b ->
-                            Log.d("TAG", "setUpUi: " +b.toString())
+            layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            adapter = DashboardListAdapter(listDates) {
+                DailyDataFirestore().getDayData(listDates[it]) { a, b ->
+                    Log.d("TAG", "setUpUi: " + b.toString())
+                    exerciseList.clear()
+                    b?.let { it1 ->
+                        exerciseList.addAll(it1)
+                    }
+                    updateExerciseList()
 
-                        })
+                }
 
 //        }
 
             }
         }
+        binding.recyclerviewList.apply {
+            layoutManager = LinearLayoutManager(activity)
+            adapter = DashboardExerciseListAdapter(exerciseList)
 
 
+        }
     }
 
 
@@ -87,6 +103,5 @@ class DashBoardFragment : Fragment() {
         fragmentTransaction.func()
         fragmentTransaction.commit()
     }
-
 
 }

@@ -5,6 +5,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.mayuri.workout.UtilsJava.userId
 import timber.log.Timber
+import java.lang.reflect.Array
 
 class DailyDataFirestore() {
 
@@ -68,7 +69,7 @@ class DailyDataFirestore() {
 
 
     fun getDayData(day : String ,resultListener: (Boolean,MutableList<SingleExerciseData>?) -> Unit){
-        lateinit var list :MutableList<SingleExerciseData>
+         var list :MutableList<SingleExerciseData> = ArrayList()
 
 
         val db = Firebase.firestore

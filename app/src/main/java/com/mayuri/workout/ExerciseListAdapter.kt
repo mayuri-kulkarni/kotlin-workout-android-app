@@ -35,7 +35,7 @@ class ListiewHolder (inflater: LayoutInflater, parent: ViewGroup) :
 
     fun bind(data: SingleExerciseData) {
         mTitleView?.text = data.name
-        mYearView?.text = data.count + " " +data.countUnit +" X " +data.sets +" sets"
+        mYearView?.text = data.count + " " +data.countUnit +" x " +data.sets +" sets"
     }
 
 }

@@ -1,6 +1,7 @@
 package com.mayuri.workout
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -29,16 +30,17 @@ class DashboardListAdapter(private val list: List<String>, private val clickedIt
 class DashboardListiewHolder (inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.layout_day_list, parent, false)) {
     private var mTitleView: TextView? = null
-    private var mYearView: TextView? = null
+    private var view: View? = null
 
 
     init {
-        mTitleView = itemView.findViewById(R.id.textview_exercise_name)
-        mYearView = itemView.findViewById(R.id.textview_exercise_details)
+        mTitleView = itemView.findViewById(R.id.textview_date)
+        view = itemView.findViewById(R.id.v_divider)
     }
 
     fun bind(data: String) {
         mTitleView?.text = data
     }
+
 
 }
