@@ -42,7 +42,10 @@ class MainActivity : AppCompatActivity() {
         if (currentUser != null) {
             Log.d("TAG", "Google sign in out ")
             mGoogleSignInClient.signOut()
+            var intentMainActivity = Intent(this, SignInActivity::class.java)
+            startActivity(intentMainActivity)
             this.finish()
+
 
 
         }
