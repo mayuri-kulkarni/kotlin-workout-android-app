@@ -87,11 +87,13 @@ class SignInActivity : AppCompatActivity() {
                 }
                 var intentMainActivity = Intent(this, MainActivity::class.java)
                 startActivity(intentMainActivity)
+                finish()
 
             }
         }else{
             var intentMainActivity = Intent(this, MainActivity::class.java)
             startActivity(intentMainActivity)
+            finish()
 
         }
 
