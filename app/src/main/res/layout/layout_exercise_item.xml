@@ -33,5 +33,6 @@
         android:id="@+id/v_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:visibility="visible"
         android:background="#f5f5f5" />
 </RelativeLayout>

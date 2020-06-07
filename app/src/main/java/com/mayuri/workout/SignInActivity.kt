@@ -12,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.mayuri.workout.UtilsJava.userId
 import com.mayuri.workout.databinding.ActivitySignInBinding
 import timber.log.Timber
 
@@ -81,7 +80,7 @@ class SignInActivity : AppCompatActivity() {
             ) {
                 Timber.d("ref id - "+it)
                 if ( !it.isEmpty()) {
-                    userId = it
+                     SharedPref(this).setUserId(it)
                     Snackbar.make(binding.root, "logged in.", Snackbar.LENGTH_SHORT)
                         .show()
 

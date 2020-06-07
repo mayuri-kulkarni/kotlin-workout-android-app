@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import com.mayuri.workout.UtilsJava.userId
 import com.mayuri.workout.databinding.FragmentAddExerciseBinding
 
 /**
@@ -68,7 +67,7 @@ class AddExerciseFragment : Fragment() {
             count ,
             binding.etSets.text.toString())
         dataAd.add(
-            userId,
+            context?.let { SharedPref(it).getUserId() }!!,
            data ){
             if(it){
                 fragmentManager!!.popBackStack()

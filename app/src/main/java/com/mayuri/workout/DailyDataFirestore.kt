@@ -1,11 +1,8 @@
 package com.mayuri.workout
 
-import com.google.firebase.firestore.WriteBatch
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.mayuri.workout.UtilsJava.userId
 import timber.log.Timber
-import java.lang.reflect.Array
 
 class DailyDataFirestore() {
 
@@ -28,7 +25,6 @@ class DailyDataFirestore() {
 
         collectionRef.add(data).addOnSuccessListener {
             resultListener.invoke(true)
-            UtilsJava.currentDay.add(data)
 
         }
             .addOnFailureListener {
@@ -38,7 +34,10 @@ class DailyDataFirestore() {
     }
 
 
-    fun updateTodays(resultListener: (Boolean) -> Unit) {
+    fun updateTodays( userId: String,   resultListener: (Boolean, MutableList<SingleExerciseData>?) -> Unit
+    ) {
+        var list :MutableList<SingleExerciseData> = ArrayList()
+
         val db = Firebase.firestore
         val collectionRef = db.collection(dailyDataCollectionKey).document(userId)
             .collection(timestampsCollectionKey)
@@ -47,10 +46,9 @@ class DailyDataFirestore() {
 
         collectionRef.get().addOnSuccessListener {
             if(! it.isEmpty) {
-                UtilsJava.currentDay.clear()
                 for (document in it) {
                     Timber.d("${document.id} => ${document.data}")
-                    UtilsJava.currentDay.add(
+                    list.add(
                         SingleExerciseData(
                             document.get(nameKey) as String,
                             document.get(countUnitKey) as String,
@@ -60,15 +58,19 @@ class DailyDataFirestore() {
                     )
                 }
             }
-            resultListener.invoke(true)
+            resultListener.invoke(true,list)
         }.addOnFailureListener(){
-            resultListener.invoke(false)
+            resultListener.invoke(false,list)
 
         }
     }
 
 
-    fun getDayData(day : String ,resultListener: (Boolean,MutableList<SingleExerciseData>?) -> Unit){
+    fun getDayData(
+        day: String,
+        resultListener: (Boolean, MutableList<SingleExerciseData>?) -> Unit,
+        userId: String
+    ){
          var list :MutableList<SingleExerciseData> = ArrayList()
 
 

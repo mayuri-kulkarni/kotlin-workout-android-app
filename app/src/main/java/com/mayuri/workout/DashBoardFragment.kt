@@ -9,10 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.mayuri.workout.databinding.FragmentAddExerciseBinding
 import com.mayuri.workout.databinding.FragmentDashboardBinding
-import com.mayuri.workout.databinding.FragmentTodaysExerciseBinding
 import timber.log.Timber
 
 /**
@@ -41,12 +38,6 @@ class DashBoardFragment : Fragment() {
         for (i in 0..15)
             listDates.add(Utils().getPreviousDates(i, Utils().dateFormatDB))
 
-//        DailyDataFirestore().getAllDayData {
-//            if(it){
-//                updateList();
-//            }
-//        }
-
 
     }
 
@@ -74,8 +65,10 @@ class DashBoardFragment : Fragment() {
 
         binding.recyclerviewExercise.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+            val userid= context?.let { SharedPref(it).getUserId() }!!
+
             adapter = DashboardListAdapter(listDates) {
-                DailyDataFirestore().getDayData(listDates[it]) { a, b ->
+                DailyDataFirestore().getDayData(listDates[it], { a, b ->
                     Log.d("TAG", "setUpUi: " + b.toString())
                     exerciseList.clear()
                     b?.let { it1 ->
@@ -83,7 +76,7 @@ class DashBoardFragment : Fragment() {
                     }
                     updateExerciseList()
 
-                }
+                },userid)
 
 //        }
 

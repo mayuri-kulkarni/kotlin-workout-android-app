@@ -1,6 +1,7 @@
 package com.mayuri.workout
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mayuri.workout.databinding.FragmentAddExerciseBinding
 import com.mayuri.workout.databinding.FragmentTodaysExerciseBinding
 import timber.log.Timber
 
@@ -17,7 +17,7 @@ import timber.log.Timber
  */
 class TodaysExerciseFragment : Fragment() {
     lateinit var binding: FragmentTodaysExerciseBinding
-    lateinit var list: List<SingleExerciseData>
+    lateinit var list: MutableList<SingleExerciseData>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,21 +35,13 @@ class TodaysExerciseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("onViewCreated")
         setUpUi()
+        val userid= context?.let { SharedPref(it).getUserId() }!!
+        DailyDataFirestore().getDayData(Utils().getTodayDate(Utils().dateFormatDB), { a, b ->
+            Log.d("TAG", "setUpUi: " + b.toString())
+            list= b!!
+            updateList()
 
-        DailyDataFirestore().updateTodays {
-            if(it){
-                updateList();
-            }
-        }
-
-
-        binding.textviewAddExercise.setOnClickListener {
-            fragmentManager?.inTransaction {
-                var fr = fragmentManager!!.fragments
-                if( fragmentManager!!.fragments.isNotEmpty() && fragmentManager!!.fragments[0].id!=-1  )
-                this.replace(fragmentManager!!.fragments[0].id,AddExerciseFragment(), "").addToBackStack(null)
-            }
-        }
+        },userid)
 
     }
 
@@ -71,8 +63,16 @@ class TodaysExerciseFragment : Fragment() {
 
         binding.recyclerviewExercise.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = ExerciseListAdapter(UtilsJava.currentDay)
+            adapter = ExerciseListAdapter(list)
 
+        }
+
+        binding.textviewAddExercise.setOnClickListener {
+            fragmentManager?.inTransaction {
+                var fr = fragmentManager!!.fragments
+                if( fragmentManager!!.fragments.isNotEmpty() && fragmentManager!!.fragments[0].id!=-1  )
+                    this.replace(fragmentManager!!.fragments[0].id,AddExerciseFragment(), "").addToBackStack(null)
+            }
         }
 
     }
